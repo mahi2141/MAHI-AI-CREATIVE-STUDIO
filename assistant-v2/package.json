@@ -1,4 +1,3 @@
-
 {
   "name": "mahi-ai-assistant-v2",
   "version": "2.0.0",
@@ -8,8 +7,10 @@
   },
   "dependencies": {
     "@google/genai": "^1.0.0",
-    "express": "^5.0.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "express": "^5.0.0",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0"
   }
 }
