@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MAHI AI Assistant</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#090a0e;color:#fff;
+ font-family:Arial,sans-serif;
+}
+header{
+ padding:20px;text-align:center;
+ background:#15151b;border-bottom:1px solid #333;
+}
+header h2{color:#e8bd75;margin:0}
+header p{color:#aaa;font-size:13px}
+main{max-width:750px;margin:auto;padding:20px}
+.status{
+ color:#76d99b;text-align:center;font-size:13px;
+ margin:15px;
+}
+.chat{
+ height:55vh;min-height:330px;overflow-y:auto;
+ background:#14151c;border:1px solid #333;
+ border-radius:13px;padding:15px;
+}
+.msg{
+ padding:13px;margin:12px 0;
+ border-radius:12px;line-height:1.6;
+ white-space:pre-wrap;overflow-wrap:anywhere;
+}
+.bot{background:#25252e;color:#eee;margin-right:25px}
+.user{background:#76552b;color:white;margin-left:25px}
+.controls{margin-top:18px}
+select,textarea{
+ width:100%;padding:13px;margin-bottom:12px;
+ background:#171820;color:white;
+ border:1px solid #444;border-radius:8px;
+ font-size:15px;
+}
+textarea{height:85px;resize:vertical}
+button{
+ border:0;border-radius:8px;padding:13px 18px;
+ background:#d9ad68;color:#111;
+ font-weight:bold;cursor:pointer;
+}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.actions button:last-child{
+ background:#292a33;color:white;
+}
+.note{font-size:12px;color:#999;line-height:1.6}
+footer{text-align:center;color:#777;padding:25px}
+</style>
+</head>
+<body>
+
+<header>
+<h2>✦ MAHI AI ASSISTANT</h2>
+<p>Your Personal Creative Workspace</p>
+</header>
+
+<main>
+<div class="status">● Offline Demo Assistant</div>
+
+<div class="chat" id="chat">
+<div class="msg bot">
+வணக்கம்! Welcome to MAHI AI Assistant.
+
+நான் உங்கள் Creative Assistant.
+
+Movie, Music, YouTube, Website, Coding போன்ற விஷயங்களில் உதவ முடியும்.
+
+உங்கள் கேள்வியை கீழே எழுதுங்கள்!
+</div>
+</div>
+
+<div class="controls">
+<select id="language">
+<option value="ta">Tamil + English</option>
+<option value="en">English</option>
+</select>
+
+<textarea id="question"
+placeholder="உங்கள் கேள்வியை இங்கே எழுதுங்கள்..."></textarea>
+
+<div class="actions">
+<button onclick="sendMessage()">Send ➤</button>
+<button onclick="clearChat()">Clear Chat</button>
+</div>
+</div>
+
+<p class="note">
+Note: This is a free, offline demo using predefined responses.
+It does not connect to a live AI model.
+</p>
+</main>
+
+<footer>
+MAHI AI CREATIVE STUDIO © 2026
+<br>Created by Mahi2141
+</footer>
+
+<script>
+const chat=document.getElementById("chat");
+
+function addMessage(text,type){
+ const div=document.createElement("div");
+ div.className="msg "+type;
+ div.textContent=text;
+ chat.appendChild(div);
+ chat.scrollTop=chat.scrollHeight;
+}
+
+function getAnswer(q,lang){
+ q=q.toLowerCase();
+
+ const tamil=lang==="ta";
+
+ if(/hello|hi|vanakkam|வணக்கம்/.test(q)){
+ return tamil?
+ "வணக்கம்! MAHI AI Assistant-க்கு வரவேற்கிறேன். இன்று என்ன உருவாக்கலாம்?":
+ "Hello! Welcome to MAHI AI Assistant. What would you like to create today?";
+ }
+
+ if(/movie|film|cinema|திரைப்படம்|படம்|கதை/.test(q)){
+ return tamil?
+ "🎬 AI MOVIE STUDIO\n\nஉங்கள் திரைப்படத்திற்கான:\n• Story concept\n• Screenplay ideas\n• Scene descriptions\n• Cinematic prompts\n• Trailer concepts\n\nமுதலில் உங்கள் திரைப்படத்தின் கதையைத் தேர்வு செய்யுங்கள்.":
+ "🎬 AI MOVIE STUDIO\n\nExplore story concepts, screenplay ideas, scene descriptions, cinematic prompts and trailer concepts.";
+ }
+
+ if(/music|song|bgm|பாடல்|இசை/.test(q)){
+ return tamil?
+ "🎵 AI MUSIC STUDIO\n\n• Original song ideas\n• Horror BGM concepts\n• Cinematic music prompts\n• Instrumental concepts\n• Background sound ideas\n\nஎந்த வகையான இசை வேண்டும்?":
+ "🎵 AI MUSIC STUDIO\n\nExplore original song ideas, cinematic BGM, instrumental concepts and music prompts.";
+ }
+
+ if(/image|photo|poster|thumbnail|படம்|புகைப்படம்/.test(q)){
+ return tamil?
+ "🎨 AI IMAGE STUDIO\n\n• Movie posters\n• YouTube thumbnails\n• Logo concepts\n• Digital artwork\n• Image generation prompts\n\nஉங்கள் படத்தின் யோசனையை எழுதுங்கள்.":
+ "🎨 AI IMAGE STUDIO\n\nCreate concepts for posters, thumbnails, logos, digital artwork and image prompts.";
+ }
+
+ if(/youtube|channel|shorts|யூடியூப்/.test(q)){
+ return tamil?
+ "▶️ YOUTUBE CREATOR STUDIO\n\n• Video ideas\n• Titles\n• Descriptions\n• Hashtags\n• Shorts concepts\n• Content planning\n\nஎந்த வீடியோ உருவாக்கப் போகிறீர்கள்?":
+ "▶️ YOUTUBE CREATOR STUDIO\n\nExplore video ideas, titles, descriptions, hashtags and content planning.";
+ }
+
+ if(/website|html|css|javascript|coding|code|வலைத்தளம்/.test(q)){
+ return tamil?
+ "💻 WEBSITE & CODING STUDIO\n\n• HTML\n• CSS\n• JavaScript\n• Website design ideas\n• Web development concepts\n\nஉங்கள் coding தேவையை எழுதுங்கள்.":
+ "💻 WEBSITE & CODING STUDIO\n\nExplore HTML, CSS, JavaScript, website design and development concepts.";
+ }
+
+ if(/assistant|help|உதவி/.test(q)){
+ return tamil?
+ "🤖 உங்களுக்கு Movie, Music, Image, Website, YouTube மற்றும் Coding தொடர்பான உதவிகளை வழங்க முடியும். உங்கள் தேவையைச் சொல்லுங்கள்!":
+ "🤖 I can help with movie ideas, music concepts, image prompts, websites, YouTube and coding.";
+ }
+
+ return tamil?
+ "உங்கள் கேள்வி பதிவு செய்யப்பட்டது!\n\nஇது தற்போது Offline Demo என்பதால் எல்லா கேள்விகளுக்கும் உண்மையான AI பதில் உருவாக்க முடியாது.\n\nLive AI வசதி பின்னர் இணைக்கப்படும்.":
+ "Your question has been received!\n\nThis is currently an offline demo, so it cannot generate intelligent answers to every question. Live AI integration can be added later.";
+}
+
+function sendMessage(){
+ const input=document.getElementById("question");
+ const q=input.value.trim();
+
+ if(!q)return;
+
+ const lang=document.getElementById("language").value;
+ addMessage(q,"user");
+ input.value="";
+
+ const answer=getAnswer(q,lang);
+ setTimeout(()=>addMessage(answer,"bot"),300);
+}
+
+function clearChat(){
+ chat.innerHTML="";
+ addMessage("Chat cleared. வணக்கம்! How can I help you?","bot");
+}
+
+document.getElementById("question")
+.addEventListener("keydown",function(e){
+ if(e.key==="Enter"&&!e.shiftKey){
+ e.preventDefault();
+ sendMessage();
+ }
+});
+</script>
+</body>
+</html>
