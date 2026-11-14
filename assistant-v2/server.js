@@ -9,7 +9,7 @@ const port = Number(process.env.PORT || 3000);
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(express.json({ limit: '1mb' }));
 app.use('/api/', rateLimit({ windowMs: 60_000, limit: 20, standardHeaders: 'draft-7', legacyHeaders: false }));
-app.use(express.static('public'));
+app.use(express.static('.'));
 
 app.get('/api/health', (_req, res) => {
   res.json({ ok: true, configured: Boolean(process.env.GEMINI_API_KEY) });
