@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ta">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090b12">
+<title>MAHI AI Assistant V2</title>
+<style>
+:root{--bg:#090b12;--panel:#121725;--panel2:#192133;--line:#29334a;--gold:#e8bd75;--text:#f4f5f8;--muted:#9ba6bb;--blue:#789bff}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#17213a 0,#090b12 55%);color:var(--text);font:15px/1.55 Inter,system-ui,Arial,sans-serif;min-height:100vh}
+header{position:sticky;top:0;z-index:3;background:#0c101beF;border-bottom:1px solid var(--line);backdrop-filter:blur(14px);padding:15px 18px}
+.top{max-width:1050px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:12px}.brand{display:flex;align-items:center;gap:12px}.logo{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#f2d49d,#9a6a30);color:#16110a;font-size:23px;font-weight:900}.brand h1{font-size:17px;margin:0;letter-spacing:.08em}.brand p{margin:2px 0 0;color:var(--muted);font-size:12px}.pill{border:1px solid #315b49;color:#8ee0b0;background:#10251e;padding:6px 10px;border-radius:30px;font-size:12px}
+main{max-width:1050px;margin:24px auto;padding:0 16px;display:grid;grid-template-columns:230px minmax(0,1fr);gap:18px}.side,.workspace{background:#101624d9;border:1px solid var(--line);border-radius:18px}.side{padding:15px;height:max-content}.side h3{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.12em;margin:4px 8px 12px}.tool{width:100%;border:0;background:transparent;color:#dce3f2;text-align:left;padding:11px;border-radius:10px;cursor:pointer;margin:2px 0}.tool:hover,.tool.active{background:#202b40;color:var(--gold)}.side .hint{font-size:12px;color:var(--muted);padding:12px 8px 2px}.workspace{overflow:hidden;min-height:75vh;display:flex;flex-direction:column}.hero{padding:20px 22px 12px;border-bottom:1px solid var(--line)}.hero h2{margin:0;font-size:20px}.hero p{margin:5px 0;color:var(--muted);font-size:13px}.chat{padding:20px;flex:1;min-height:390px;max-height:60vh;overflow:auto}.msg{max-width:88%;padding:13px 15px;margin:0 0 14px;border-radius:15px;white-space:pre-wrap;overflow-wrap:anywhere}.bot{background:#1b2537;border:1px solid #2c3952;border-top-left-radius:4px}.user{background:#554027;border:1px solid #8a673c;margin-left:auto;border-top-right-radius:4px}.msg small{display:block;color:#aeb9cb;font-size:10px;margin-bottom:5px}.composer{padding:15px;border-top:1px solid var(--line);background:#0d1320}.quick{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}.chip,.secondary{border:1px solid var(--line);background:#151e2e;color:#dbe2ef;border-radius:20px;padding:7px 11px;cursor:pointer;font-size:12px}.entry{display:flex;gap:9px;align-items:flex-end}.entry textarea{flex:1;min-height:52px;max-height:150px;resize:vertical;background:#151d2c;border:1px solid #34415a;border-radius:13px;padding:13px;color:white;font:inherit;outline:none}.entry textarea:focus{border-color:var(--gold)}button{font:inherit}.send{border:0;background:linear-gradient(135deg,#f0d39c,#c18b45);color:#17120b;border-radius:12px;padding:13px 18px;font-weight:800;cursor:pointer}.send:disabled{opacity:.5;cursor:wait}.under{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:var(--muted);font-size:11px;margin-top:9px}.actions{display:flex;gap:7px}.secondary{border-radius:9px}.typing{color:var(--gold);font-size:13px;padding:0 20px 12px}.footer{text-align:center;color:#6f7b91;font-size:11px;padding:14px}
+@media(max-width:720px){main{display:block;margin:14px auto}.side{margin-bottom:12px}.side nav{display:flex;overflow:auto;gap:4px}.side h3,.side .hint{display:none}.tool{white-space:nowrap;width:auto}.workspace{min-height:76vh}.chat{max-height:54vh;min-height:350px}.brand h1{font-size:14px}.pill{font-size:10px}}
+</style>
+</head>
+<body>
+<header><div class="top"><div class="brand"><div class="logo">M</div><div><h1>MAHI AI CREATIVE STUDIO</h1><p>AI ASSISTANT · VERSION 2.0</p></div></div><span class="pill" id="status">● Checking server</span></div></header>
+<main>
+<aside class="side"><h3>Creative tools</h3><nav>
+<button class="tool active" data-mode="General Assistant">✦ General Assistant</button>
+<button class="tool" data-mode="AI Movie Studio">🎬 AI Movie Studio</button>
+<button class="tool" data-mode="AI Music Studio">🎵 AI Music Studio</button>
+<button class="tool" data-mode="AI Image Studio">🎨 AI Image Studio</button>
+<button class="tool" data-mode="Website & Coding">💻 Website & Coding</button>
+<button class="tool" data-mode="YouTube Studio">▶ YouTube Studio</button>
+</nav><div class="hint">Choose a studio to guide the assistant's responses.</div></aside>
+<section class="workspace">
+<div class="hero"><h2 id="modeTitle">✦ MAHI AI Assistant</h2><p>Ask in Tamil or English. Your creative partner for ideas, prompts and code.</p></div>
+<div class="chat" id="chat" aria-live="polite"></div><div class="typing" id="typing" hidden>MAHI AI is thinking…</div>
+<div class="composer"><div class="quick">
+<button class="chip" data-prompt="Create a cinematic short-film story idea in Tamil.">🎬 Story idea</button>
+<button class="chip" data-prompt="Write a premium cinematic image-generation prompt.">🖼 Image prompt</button>
+<button class="chip" data-prompt="Create a YouTube video title, description and hashtags.">▶ YouTube SEO</button>
+<button class="chip" data-prompt="Help me build a responsive website.">💻 Website</button>
+</div><div class="entry"><textarea id="question" placeholder="உங்கள் கேள்வியை இங்கே எழுதுங்கள்… (Enter to send)" rows="2"></textarea><button class="secondary" id="mic" title="Voice input">🎙</button><button class="send" id="send">Send ➤</button></div>
+<div class="under"><span>Enter to send · Shift+Enter for new line · Chat saved on this device</span><div class="actions"><button class="secondary" id="export">Export</button><button class="secondary" id="clear">Clear chat</button></div></div></div>
+</section>
+</main>
+<div class="footer">MAHI AI CREATIVE STUDIO © 2026 · Created by Mahi2141</div>
+<script>
+const chat=document.querySelector('#chat'),input=document.querySelector('#question'),send=document.querySelector('#send'),typing=document.querySelector('#typing');
+let mode='General Assistant',history=[];
+const KEY='mahi-ai-v2-history';
+function add(text,role,save=true){const el=document.createElement('div');el.className='msg '+role;const who=document.createElement('small');who.textContent=role==='user'?'YOU':'MAHI AI';const body=document.createElement('div');body.textContent=text;el.append(who,body);chat.append(el);chat.scrollTop=chat.scrollHeight;if(save){history.push({role:role==='user'?'user':'model',text});localStorage.setItem(KEY,JSON.stringify(history.slice(-80)));}}
+function restore(){try{history=JSON.parse(localStorage.getItem(KEY)||'[]');}catch{history=[]}if(history.length){for(const m of history){const el=document.createElement('div');el.className='msg '+(m.role==='user'?'user':'bot');const s=document.createElement('small');s.textContent=m.role==='user'?'YOU':'MAHI AI';const b=document.createElement('div');b.textContent=m.text;el.append(s,b);chat.append(el)}}else add('வணக்கம்! Welcome to MAHI AI Assistant V2.\\n\\nநான் உங்கள் AI Creative Partner. Movie, Music, Image, Website, YouTube மற்றும் Coding உதவிகளுக்கு கேளுங்கள்.','bot',false);chat.scrollTop=chat.scrollHeight;}
+async function check(){try{const r=await fetch('/api/health');document.querySelector('#status').textContent=r.ok?'● Gemini server ready':'● Server issue';}catch{document.querySelector('#status').textContent='● Start backend to use AI';}}
+async function submit(){const q=input.value.trim();if(!q||send.disabled)return;add(q,'user');input.value='';send.disabled=true;typing.hidden=false;try{const contents=history.slice(0,-1).slice(-20).map(m=>({role:m.role,parts:[{text:m.text}]}));contents.push({role:'user',parts:[{text:`Selected workspace: ${mode}\\nUser request: ${q}`} ]});const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents,language:document.documentElement.lang})});const data=await r.json();if(!r.ok)throw new Error(data.error||'Request failed');add(data.reply||'No response received.','bot');}catch(e){add('⚠️ '+e.message+'\\n\\nCheck that the backend is running and GEMINI_API_KEY is configured.','bot');}finally{typing.hidden=true;send.disabled=false;input.focus();}}
+send.addEventListener('click',submit);input.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();submit();}});
+document.querySelectorAll('.tool').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tool').forEach(x=>x.classList.remove('active'));b.classList.add('active');mode=b.dataset.mode;document.querySelector('#modeTitle').textContent=b.textContent.trim();}));
+document.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{input.value=b.dataset.prompt;input.focus();}));
+document.querySelector('#clear').addEventListener('click',()=>{if(confirm('Clear this chat history?')){history=[];localStorage.removeItem(KEY);chat.innerHTML='';add('Chat cleared. வணக்கம்! What shall we create next?','bot',false);}});
+document.querySelector('#export').addEventListener('click',()=>{const blob=new Blob([history.map(m=>(m.role==='user'?'YOU':'MAHI AI')+':\\n'+m.text).join('\\n\\n')],{type:'text/plain'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mahi-ai-chat.txt';a.click();URL.revokeObjectURL(a.href);});
+const Speech=window.SpeechRecognition||window.webkitSpeechRecognition;const mic=document.querySelector('#mic');if(Speech){mic.addEventListener('click',()=>{const rec=new Speech();rec.lang='ta-IN';rec.onresult=e=>{input.value+=(input.value?' ':'')+e.results[0][0].transcript;};rec.start();});}else{mic.disabled=true;mic.title='Voice input is not supported in this browser';}
+restore();check();
+</script>
+</body></html>
